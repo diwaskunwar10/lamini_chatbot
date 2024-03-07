@@ -3,7 +3,7 @@ from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 
 # Load the pre-trained model and tokenizer
 model_name = "lamini/LaMini-Flan-T5-248M"
-cache_dir = "/home/diwas/Documents/ai/cache/"
+cache_dir = "/cache/" #define the cache directory
 
 tokenizer = AutoTokenizer.from_pretrained(model_name, cache_dir=cache_dir)
 model = AutoModelForSeq2SeqLM.from_pretrained(model_name, cache_dir=cache_dir)
@@ -15,12 +15,14 @@ def get_lamini_response(prompt, max_new_tokens=50):
     response = tokenizer.decode(outputs[0], skip_special_tokens=True)
     return response
 
-# Streamlit UI
+# Streamlit Title
 st.title("Lamini Chatbot")
 
+#streamlit user input box
 user_input = st.text_input("You:")
 if user_input:
     response = get_lamini_response(user_input, max_new_tokens=500)
+    #streamlit lamini response output display box
     st.text_area("Chatbot:", value=response, height=200)
 
 st.sidebar.info("Type 'quit', 'exit', or 'q' to end the conversation.")
